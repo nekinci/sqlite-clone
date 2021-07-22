@@ -162,7 +162,7 @@ uint32_t* internal_node_cell(void* node, uint32_t cell_num);
 uint32_t* internal_node_child(void *node, uint32_t child_num);
 uint32_t* internal_node_key(void *node, uint32_t key_num);
 uint32_t get_node_max_key(void *node);
-int is_node_root(void *node);
+bool is_node_root(void *node);
 void set_node_root(void *node, int is_root);
 void initialize_internal_node(void *node);
 void indent(uint32_t level);
@@ -493,9 +493,9 @@ void deserialize_row(void *source, Row* destination){
     memcpy(&(destination->email), source + EMAIL_OFFSET, EMAIL_SIZE);
 }
 
-int is_node_root(void *node){
+bool is_node_root(void *node){
     uint8_t value = *((uint8_t*) (node + IS_ROOT_OFFSET));
-    return value;
+    return (bool)value;
 }
 
 void set_node_root(void*node, int is_root){
@@ -565,7 +565,7 @@ ExecuteResult execute_insert(Statement* statement, Table* table){
 
 NodeType get_node_type(void* node){
     uint8_t value = *((uint8_t*) (node + NODE_TYPE_OFFSET));
-    return value;
+    return (NodeType)value;
 }
 
 void set_node_type(void *node, NodeType type){
@@ -647,7 +647,7 @@ uint32_t* leaf_node_num_cells(void *node){
 }
 
 void* leaf_node_cell(void *node, uint32_t cell_num){
-    return node + LEAF_NODE_HEADER_SIZE + cell_num + LEAF_NODE_CELL_SIZE;
+    return node + LEAF_NODE_HEADER_SIZE + cell_num * LEAF_NODE_CELL_SIZE;
 }
 
 uint32_t* leaf_node_key(void *node, uint32_t cell_num){
