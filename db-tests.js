@@ -133,7 +133,7 @@ describe('database-tests', function (){
             'insert 1 a b',
             '.exit'
         ], [
-            'db > Executed .',
+            'Executed .',
             'db > '
         ])
 
@@ -171,7 +171,7 @@ describe('database-tests', function (){
             'db > Executed .',
             'db > Executed .',
             'db > Tree:',
-            'leaf(size 3)',
+            '- leaf (size 3)',
             '  - 1',
             '  - 2',
             '  - 3',
